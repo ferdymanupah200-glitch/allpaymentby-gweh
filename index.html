@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>TopUp — Pilih Metode Pembayaran</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --glass-bg: rgba(255,255,255,0.08);
+      --glass-border: rgba(255,255,255,0.15);
+      --accent: #2db34a;
+      --card-radius: 18px;
+      --shadow: 0 8px 30px rgba(0,0,0,0.45);
+      --text-light: rgba(255,255,255,0.95);
+      --muted: rgba(255,255,255,0.8);
+      --glass-blur: 8px;
+      font-family: 'Poppins', sans-serif;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      background-image: url('background.jpg');
+      background-size:cover;
+      background-position:center;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+      color:var(--text-light);
+      background-attachment: fixed;
+      min-height:100vh;
+    }
+    .overlay{
+      position:fixed;
+      inset:0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.55) 100%);
+      pointer-events:none;
+    }
+    .container{
+      width:100%;
+      max-width:420px;
+      position:relative;
+      z-index:2;
+    }
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      border: 1px solid var(--glass-border);
+      border-radius: var(--card-radius);
+      padding:22px;
+      box-shadow:var(--shadow);
+      backdrop-filter: blur(var(--glass-blur));
+    }
+    .title{
+      text-align:center;
+      font-size:22px;
+      font-weight:700;
+      margin-bottom:10px;
+      background: linear-gradient(90deg, #00ff87, #60efff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .subtitle{
+      text-align:center;
+      font-size:14px;
+      color:var(--muted);
+      margin-bottom:18px;
+      font-style: italic;
+      letter-spacing: 0.5px;
+    }
+    .payment-grid{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-bottom:20px;
+    }
+    .pay{
+      flex:1 1 100%;
+      background: rgba(255,255,255,0.05);
+      border-radius:12px;
+      padding:10px 14px;
+      border:2px solid transparent;
+      transition: all .18s ease;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+    .pay.checked{
+      border-color: rgba(255,255,255,0.3);
+      background: rgba(255,255,255,0.1);
+      transform: scale(1.02);
+    }
+    .pay img{
+      width:40px;
+      height:40px;
+      border-radius:8px;
+      object-fit:contain;
+      background:white;
+      padding:4px;
+    }
+    .pay-text strong{
+      font-size:16px;
+      line-height:1.2;
+      font-weight:600;
+    }
+    .pay-text small{
+      font-size:13px;
+      color:var(--muted);
+    }
+    .note{
+      font-size:13px;
+      color:var(--muted);
+      margin-bottom:14px;
+      text-align:center;
+      font-style: italic;
+    }
+    .btn{
+      width:100%;
+      background: linear-gradient(90deg, #3fb34a, #2b9740);
+      color:white;
+      border:none;
+      padding:14px 18px;
+      border-radius:12px;
+      font-size:16px;
+      font-weight:700;
+      cursor:pointer;
+      letter-spacing: 0.5px;
+      transition: transform 0.2s;
+    }
+    .btn:hover{
+      transform: scale(1.03);
+    }
+    .foot{
+      margin-top:12px;
+      font-size:12px;
+      color:var(--muted);
+      text-align:center;
+      font-style: italic;
+    }
+    .bg-picker{
+      display:block;
+      margin:0 auto 14px auto;
+      text-align:center;
+      font-size:13px;
+      color:var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="card">
+      <input type="file" class="bg-picker" accept="image/*" onchange="ubahBackground(event)">
+      
+      <div class="title">Payment by Ferdy Store</div>
+      <div class="subtitle">Pilih metode pembayaran favoritmu</div>
+
+      <div class="payment-grid">
+        <div class="pay" onclick="selectPay(this)" data-value="Dana">
+          <img src="https://files.catbox.moe/qf2od4.jpg" alt="Dana">
+          <div class="pay-text">
+            <strong>Dana</strong>
+            <small>081385476702</small>
+          </div>
+        </div>
+        <div class="pay" onclick="selectPay(this)" data-value="OVO">
+          <img src="https://files.catbox.moe/366ct0.jpg" alt="OVO">
+          <div class="pay-text">
+            <strong>OVO</strong>
+            <small>081385476702</small>
+          </div>
+        </div>
+        <div class="pay" onclick="selectPay(this)" data-value="GoPay">
+          <img src="https://files.catbox.moe/hs0p99.jpg" alt="GoPay">
+          <div class="pay-text">
+            <strong>GoPay</strong>
+            <small>081385476702</small>
+          </div>
+        </div>
+      </div>
+
+      <p class="note">KIRIM BUKTI TRANSFER, JIKA TIDAK MAKA TRANSAKSI DIBATALKAN DAN DIBAGIAN PILIH FILE ANDA BISA CUSTOM SENDIRI BACKGROUNDNYA.</p>
+
+      <button class="btn" onclick="lanjutkan()">Lanjutkan</button>
+
+      <div class="foot">Powered by Ferdy Ganteng</div>
+    </div>
+  </div>
+
+  <script>
+    let selectedPayment = null;
+
+    function selectPay(el){
+      document.querySelectorAll('.pay').forEach(p => p.classList.remove('checked'));
+      el.classList.add('checked');
+      selectedPayment = el.dataset.value;
+    }
+
+    function lanjutkan(){
+      if(!selectedPayment){
+        alert('Silakan pilih metode pembayaran terlebih dahulu.');
+        return;
+      }
+      window.location.href = 'https://t.me/ferdymodecariuang';
+    }
+
+    function ubahBackground(event){
+      const file = event.target.files[0];
+      if(file){
+        const reader = new FileReader();
+        reader.onload = function(e){
+          document.body.style.backgroundImage = `url('${e.target.result}')`;
+        }
+        reader.readAsDataURL(file);
+      }
+    }
+  </script>
+</body>
+</html>
